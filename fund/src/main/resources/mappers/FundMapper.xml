@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.fund.mapper.FundMapper">
+
+    <resultMap id="BaseResultMap" type="com.capricorn.fund.entity.FundDetail">
+        <result column="FUND_CODE" jdbcType="VARCHAR" property="fundCode"/>
+        <result column="FUND_NAME" jdbcType="VARCHAR" property="fundName"/>
+        <result column="FUND_VALUE" jdbcType="VARCHAR" property="fundValue"/>
+        <result column="FUND_VALUATION" jdbcType="VARCHAR" property="fundValuation"/>
+        <result column="FUND_VALUATION_INCREASE" jdbcType="VARCHAR" property="fundValuationIncrease"/>
+        <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <select id="findAllFund" resultType="Map">
+        select * from FUND_CODE_TB
+    </select>
+
+    <select id="selectFundPage" resultMap="BaseResultMap">
+        select * from (
+        select t.*,rownum r from (
+        select * from FUND_DETAIL_HIS_TB
+        order by FUND_NAME,UPDATE_TIME desc
+        ) t
+        where rownum <![CDATA[<]]> #{end} ) where r>#{start}
+    </select>
+
+</mapper>

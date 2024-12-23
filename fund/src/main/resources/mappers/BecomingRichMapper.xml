@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.fund.mapper.BecomingRichMapper">
+
+    <select id="findAllFundCode" resultType="Map">
+        select * from FUND_CODE_TB
+    </select>
+
+    <insert id="handle" parameterType="Map">
+        insert into FUND_detail_TB
+        <foreach collection="data.keys" item="key" separator="," open="(" close=")">
+            ${key}
+        </foreach>
+        values
+        <foreach collection="data.keys" item="key" separator="," open="(" close=")">
+            #{data.${key}}
+        </foreach>
+    </insert>
+
+    <insert id="saveHis" parameterType="Map">
+        insert into FUND_DETAIL_HIS_TB
+        <foreach collection="data.keys" item="key" separator="," open="(" close=")">
+            ${key}
+        </foreach>
+        values
+        <foreach collection="data.keys" item="key" separator="," open="(" close=")">
+            #{data.${key}}
+        </foreach>
+    </insert>
+
+    <delete id="delAll">
+        delete from FUND_detail_TB
+    </delete>
+
+    <select id="findAllFundDetail" resultType="Map" parameterType="String">
+        select * from FUND_DETAIL_TB where FUND_CODE in (
+            select FUND_CODE
+            from FUND_CODE_TB where CREATE_USER = #{viewer}
+            and IF_BUY='1'
+        ) and  9 > ROWNUM
+    </select>
+
+    <select id="fundQueryValue" statementType="CALLABLE">
+        {call FUND_QUERY_VALUE(
+                #{viewer, jdbcType=VARCHAR,mode=IN },
+                #{totalValue, jdbcType=NUMERIC,mode=OUT },
+                #{valuationValue, jdbcType=NUMERIC,mode=OUT },
+                #{outFlag,  jdbcType=VARCHAR,mode=OUT}
+            )}
+    </select>
+
+
+</mapper>

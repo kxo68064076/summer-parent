@@ -1,0 +1,77 @@
+spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+  thymeleaf:
+    cache: false
+  datasource:
+    dynamic:
+      primary: capricorn
+      datasource:
+        capricorn:
+          driver-class-name: oracle.jdbc.OracleDriver
+          url: jdbc:oracle:thin:@//111.229.184.145/orclcdb
+          username: c##capricorn
+          password: LjucCuqlV47Cmfgzy95R6tkZjkJXyGLZWOyx5CMuRY5r2ufPXrFT8dxg29csr7X7MAjHkYg+1jmGfk/BFNKfCg==
+          type: com.alibaba.druid.pool.DruidDataSource
+          druid:
+            initialSize: 30
+            minIdle: 30
+            maxActive : 50
+            public-Key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKv4bhStHXULIcbnFeZCv7qdY1BnuX6qpXh8mvVtsyzKdxDW5o1opLiwIsB/ObwmM1fTqoAtcgiB3OG//VKssaMCAwEAAQ==
+
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            #调度器实例名称
+            instanceName: clusteredScheduler
+            #调度器实例编号自动生成
+            instanceId: AUTO
+          jobStore:
+            #持久化方式配置
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            #持久化方式配置数据驱动，MySQL数据库
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            #quartz相关数据表前缀名
+            tablePrefix: QRTZ_
+            #开启分布式部署
+            isClustered: true
+            #分布式节点有效性检查时间间隔，单位：毫秒
+            clusterCheckinInterval: 10000
+            #配置是否使用
+            useProperties: false
+          threadPool:
+            #线程池实现类
+            class: org.quartz.simpl.SimpleThreadPool
+            #执行最大并发线程数量
+            threadCount: 10
+            #线程优先级
+            threadPriority: 5
+            #配置是否启动自动加载数据库内的定时任务，默认true
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: jdbc
+    #初始化表结构
+    jdbc:
+      initialize-schema: always
+
+mybatis:
+  mapper-locations: classpath*:/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#    default-executor-type: batch   batch执行器会影响返回操作影响行数
+    cache-enabled: false
+    default-fetch-size: 10000
+
+IP: http://fundgz.1234567.com.cn/js/
+
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  page-size-zero: true
+  helper-dialect: oracle

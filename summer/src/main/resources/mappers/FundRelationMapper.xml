@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.summer.mapper.FundRelationMapper">
+
+    <select id="queryHoldingFundList" resultType="Map" parameterType="String">
+        select * from FUND_CODE_TB
+        <where>
+            <if test="userName!=null and userName!=''">
+                CREATE_USER = #{userName}
+            </if>
+            <if test="fund!=null and fund!=''">
+                and (FUND_NAME LIKE concat(concat('%', #{fund}), '%')
+                or FUND_CODE LIKE concat(concat('%', #{fund}), '%'))
+            </if>
+                and IF_BUY = '1'
+        </where>
+    </select>
+
+    <select id="queryCollectList" resultType="Map" parameterType="String">
+        select * from FUND_CODE_TB
+        <where>
+            <if test="userName!=null and userName!=''">
+                CREATE_USER = #{userName}
+            </if>
+            <if test="fund!=null and fund!=''">
+                and (FUND_NAME LIKE concat(concat('%', #{fund}), '%')
+                or FUND_CODE LIKE concat(concat('%', #{fund}), '%'))
+            </if>
+        </where>
+    </select>
+
+    <update id="editHoldingFund" parameterType="Map">
+        update FUND_CODE_TB
+        set
+            <if test="FUND_NAME!=null and FUND_NAME!=''">
+                FUND_NAME = #{FUND_NAME} ,
+            </if>
+            <if test="FUND_NAME!=null and FUND_NAME!=''">
+                HOW_MANY = #{HOW_MANY} ,
+            </if>
+            <if test="FUND_NAME!=null and FUND_NAME!=''">
+                IF_BUY = #{IF_BUY} ,
+            </if>
+                UPDATE_TIME = to_char(sysdate,'yyyyMMdd_hh24miss')
+        where CREATE_USER = #{CREATE_USER} and FUND_CODE = #{FUND_CODE}
+    </update>
+
+    <update id="addCollectFund" parameterType="Map">
+        INSERT INTO FUND_CODE_TB (FUND_CODE, FUND_NAME, HOW_MANY, IF_BUY, CREATE_TIME, CREATE_USER, UPDATE_TIME, UPDATE_USER)
+        VALUES
+               (#{FUND_CODE}, #{FUND_NAME}, 0, 0, to_char(sysdate,'yyyyMMdd_hh24miss'), #{userName}, to_char(sysdate,'yyyyMMdd_hh24miss'), #{userName})
+
+    </update>
+
+</mapper>

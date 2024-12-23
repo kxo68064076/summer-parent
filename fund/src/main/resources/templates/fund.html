@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>七度空间</title>
+    <link rel="icon" th:href="@{/static/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+</head>
+
+<body>
+    <!-- 头部模块 -->
+    <header>
+        <h1><span>亏钱警告</span></h1>
+        <p><span>kuiqian alert！</span></p>
+    </header>；
+
+    <div class="main">
+        <!-- top5 -->
+        <div class="top5">
+            <div class="top5-title">
+                <span>持仓瘟鸡</span>
+            </div>
+            <div class="top5-content">
+                <ul>
+                    <li th:each="detail:${allFundDetail}">
+                        <div class="cicle"></div>
+                        <div class="li-content">
+                            <span th:text="${detail.get('FUND_NAME')}"></span>
+                            <span  th:text="${detail.get('FUND_VALUATION_INCREASE')}+'%'"></span>
+<!--                            <span th:style="${detail.get('down')==null}?'display: none':''">-->
+<!--                                <img th:src="@{/static/images/up.png}" alt="">-->
+<!--                            </span>-->
+                            <span th:style="${detail.get('FUND_VALUATION_INCREASE')}<0?'display:none':''">
+                                <img th:src="@{/static/images/up.png}" alt="">
+                            </span>
+                            <span th:style="${detail.get('FUND_VALUATION_INCREASE')}>0?'display:none':''">
+                                <img th:src="@{/static/images/down.png}" alt="">
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="top5-title">
+                <span>大类销售分析</span>
+            </div>-->
+        </div>
+        <!-- 销售总额 -->
+        <div class="total">
+<!--            <div class="data1">-->
+<!--                <span>今年收入</span>-->
+<!--                <p>还没算</p>-->
+<!--            </div>-->
+<!--            <div class="data2">-->
+<!--                <span>本月收益</span>-->
+<!--                <p>还没算</p>-->
+<!--            </div>-->
+<!--            <div class="data4">-->
+<!--                <span>昨日收益</span>-->
+<!--                <p>还没算</p>-->
+<!--            </div>-->
+            <canvas class="rain"></canvas>
+            <canvas class="dashed"></canvas>
+            <div class="sphere">
+                <div class="sphere-bg"></div>
+                <div class="sum">
+                    <span>昨日持有</span>
+                    <p th:text="${fundQueryValue.get('totalValue')}">还没算</p>
+                </div>
+            </div>
+            <div class="cicle3"></div>
+            <div class="cicle4"></div>
+            <div class="cicle5"></div>
+            <div class="cicle6"></div>
+            <div class="cicle7"></div>
+            <div class="cicle8">
+                <span th:text="${fundQueryValue.get('valuationValue')}">还没算</span>
+                <p>今日估算盈亏</p>
+            </div>
+            <div class="cicle9">
+                <span th:text="${fundQueryValue.get('valuationValue')}">还没算</span>
+                <p>今日估算盈亏</p>
+            </div>
+            <div class="cicle10">
+                <span th:text="${fundQueryValue.get('valuationValue')}">还没算</span>
+                <p>今日估算盈亏</p>
+            </div>
+            <div class="cicle11">
+                <span th:text="${fundQueryValue.get('valuationValue')}">还没算</span>
+                <p>今日估算盈亏</p>
+            </div>
+        </div>
+        <!-- 会销分析 -->
+        <!--<div class="analyse">
+            <div class="analyse-title">
+                <span>会销情况分析</span>
+            </div>
+            <ul>
+                <li>
+                    <img src="./images/s1.png" alt="">
+                    <h5>会销目标</h5><br>
+                    <span>Marketing Target</span><br>
+                    <em>￥4,374,266</em>
+                </li>
+                <li>
+                    <img src="./images/s3.png" alt="">
+                    <h5>会销目标</h5><br>
+                    <span>Marketing Target</span><br>
+                    <em>￥4,374,266</em>
+                </li>
+                <li>
+                    <img src="./images/s2.png" alt="">
+                    <h5>会销目标</h5><br>
+                    <span>Marketing Target</span><br>
+                    <em>￥4,374,266</em>
+                </li>
+            </ul>
+            <div class="execution">
+                <div class="title">完成情况</div>
+                <div class="cicle1"></div>
+                <div class="cicle2"></div>
+                <div class="waterChart1">
+                    <div class="chart-title">会销完成率</div>
+                    <div class="chart1"></div>
+                </div>
+                <div class="waterChart2">
+                    <div class="chart-title">会销占比</div>
+                    <div class="chart2"></div>
+                </div>
+            </div>
+        </div>-->
+        <!-- 鞋服配销售分析 -->
+        <!--<div class="sale">
+            <ul>
+                <li>
+                    <div class="showImg">
+                        <img src="./images/shoe.png" alt="">
+                    </div>
+                    <div class="data">
+                        <span>鞋类</span>
+                        <span>52563</span>
+                    </div>
+                    <div class="shoeChart"></div>
+                </li>
+                <li>
+                    <div class="showImg">
+                        <img src="./images/clothes.png" alt="">
+                    </div>
+                    <div class="data">
+                        <span>服装</span>
+                        <span>32563</span>
+                    </div>
+                    <div class="clothesChart"></div>
+                </li>
+                <li>
+                    <div class="showImg">
+                        <img src="./images/mz.png" alt="">
+                    </div>
+                    <div class="data">
+                        <span>配饰</span>
+                        <span>12563</span>
+                    </div>
+                    <div class="mzChart"></div>
+                </li>
+            </ul>
+        </div>-->
+        <!-- 折线图 -->
+        <div class="lineChart">
+
+        </div>
+    </div>
+
+    <!-- 底部模块 -->
+    <div class="bottom">
+        <h5>
+            <span onclick="temp()">调仓</span>
+        </h5>
+<!--        <p>Data Status</p>-->
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+
+        setInterval(function () {
+            console.log("我刷新了");
+            location.reload()
+        },60000);
+
+        function temp() {
+            alert("还没做")
+        }
+    </script>
+</body>
+<script type="text/javascript" th:src="@{/static/js/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
+
+</html>

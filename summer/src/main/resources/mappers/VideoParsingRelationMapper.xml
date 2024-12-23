@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.summer.mapper.VideoParsingRelationMapper">
+
+    <select id="queryParameterList" resultType="Map">
+        select * from APP_VIDEO_PARSING_PARAMETER
+    </select>
+
+    <insert id="addParsingUrl" parameterType="map">
+        insert into APP_VIDEO_PARSING_PARAMETER(PARSING_URL) values (#{url})
+    </insert>
+
+    <delete id="delParsingUrl" parameterType="String" >
+        delete from APP_VIDEO_PARSING_PARAMETER where PARSING_URL = #{url}
+    </delete>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.summer.mapper.UserRelationMapper">
+
+    <select id="queryUserList" resultType="Map">
+        select * from APP_USER
+        where USER_NAME like '%'||#{userName}||'%'
+    </select>
+
+    <insert id="addUser" parameterType="map">
+        INSERT INTO APP_USER (USER_ID, USER_NAME, USER_PASS, TELEPHONE, EMAIL, USER_STATUS, LAST_LOGIN_TIME, DATA_CREATE_USER, DATA_CREATE_TIME, DATA_UPDATE_USER, DATA_UPDATE_TIME)
+        VALUES (#{USER_ID}, #{userName}, #{passWord}, #{telephone}, #{email}, #{status}, null , #{DATA_CREATE_USER}, to_char(sysdate,'yyyyMMdd hh24:mi:ss'), #{DATA_UPDATE_USER}, to_char(sysdate,'yyyyMMdd hh24:mi:ss'))
+    </insert>
+
+    <select id="getUserId" resultType="INTEGER" >
+        select to_number(max(id)+1) from (
+                                  select substr(USER_ID, 2, 5) id
+                                  from APP_USER
+                              )
+        where id != '99999'
+    </select>
+
+    <update id="editUser" parameterType="map">
+        UPDATE APP_USER
+        SET USER_NAME = #{USER_NAME},
+            USER_PASS = #{USER_PASS},
+            TELEPHONE = #{TELEPHONE},
+            EMAIL = #{EMAIL},
+            USER_STATUS = #{USER_STATUS},
+            LAST_LOGIN_TIME = null,
+            DATA_UPDATE_USER = #{DATA_UPDATE_USER},
+            DATA_UPDATE_TIME = to_char(sysdate,'yyyyMMdd hh24:mi:ss')
+        WHERE USER_ID = #{USER_ID}
+    </update>
+
+    <delete id="delUser" parameterType="String" >
+        delete from APP_USER
+        WHERE USER_ID = #{USER_ID}
+        and USER_ID not in ('s00000','s99999')
+    </delete>
+
+</mapper>

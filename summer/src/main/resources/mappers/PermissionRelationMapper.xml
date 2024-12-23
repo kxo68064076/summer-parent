@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capricorn.summer.mapper.PermissionRelationMapper">
+
+    <select id="getAllRoutes" resultType="Map" parameterType="map">
+        select RANKCD as rankcd,
+               AUTHCD as authcd,
+               AUTHUR as authur,
+               SORTNO as sortno,
+               PARTAH as partah,
+               AUTHNA_CH as auyhnach
+        from SIF_SYS_AUTH
+        order by rankcd ,sortno
+    </select>
+
+</mapper>
